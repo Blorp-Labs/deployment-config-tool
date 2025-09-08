@@ -408,7 +408,7 @@ function App() {
         <h2 className="font-jersey text-3xl">Try it!</h2>
         <span className="text-muted-foreground">For best results, you should paste the below link into a private tab to prevent issues with any previously persisted state.</span>
         <Button variant="outline" onClick={() => {
-          copyToClipboard(`http://localhost:5173?${demoParams}`);
+          copyToClipboard(`https://blorpblorp.xyz?${demoParams}`);
           jsConfetti.addConfetti()
         }}>
           Copy demo link
