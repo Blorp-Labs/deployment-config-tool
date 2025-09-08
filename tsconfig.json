@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "rootDir": ".",
+    "noEmit": true,
+    "module": "Preserve",
+    "moduleResolution": "Bundler",
+    "downlevelIteration": true,
+    "preserveSymlinks": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "types": [
+      "node",
+      "react",
+      "vite/client"
+    ],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": false,
+    "useUnknownInCatchVariables": true,
+    "noImplicitReturns": false,
+    "noUnusedLocals": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "allowImportingTsExtensions": true
+  }
+}
