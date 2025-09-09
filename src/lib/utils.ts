@@ -1,13 +1,13 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 /**
  * Copies the given text to the clipboard.
- * 
+ *
  * @param text - The text to copy
  * @returns A promise that resolves to true if successful, false otherwise
  */

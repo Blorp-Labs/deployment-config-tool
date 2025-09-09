@@ -2,9 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "rootDir": ".",
     "noEmit": true,
@@ -14,15 +12,8 @@
     "preserveSymlinks": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
-    "types": [
-      "node",
-      "react",
-      "vite/client"
-    ],
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "types": ["node", "react", "vite/client"],
+    "lib": ["dom", "esnext"],
     "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,

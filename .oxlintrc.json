@@ -1,8 +1,3 @@
 {
-  "plugins": [
-    "react",
-    "unicorn",
-    "typescript",
-    "oxc"
-  ]
+  "plugins": ["react", "unicorn", "typescript", "oxc"]
 }
