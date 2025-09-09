@@ -338,7 +338,7 @@ function App() {
       </h1>
 
       <h2 className="text-muted-foreground">
-        This tool helps generate deployment configs for Blorp
+        This tool helps generate and test deployment configs for Blorp
       </h2>
 
       <div className={cn("flex flex-col gap-3 border p-4 rounded-sm shadow-sm",
@@ -348,8 +348,17 @@ function App() {
           REACT_APP_NAME
         </label>
         <p className="text-muted-foreground text-sm">
-          This name is used accross copy in the app when refering to itself.
+          This name is used accross copy when the {name || "Blorp"} referes to itself.
         </p>
+        <div className="dark:prose-invert prose prose-sm">
+          <b>
+            Used in:
+          </b>
+          <ul>
+            <li>Page title</li>
+            <li>User agent</li>
+          </ul>
+        </div>
         <Input id="name" value={name} onChange={e => setName(e.target.value)} className="font-mono" placeholder="Blorp" />
       </div>
 
@@ -406,7 +415,7 @@ function App() {
 
       <div className="flex flex-col items-start gap-3 border p-4 rounded-sm shadow-sm">
         <h2 className="font-jersey text-3xl">Try it!</h2>
-        <span className="text-muted-foreground">For best results, you should paste the below link into a private tab to prevent issues with any previously persisted state.</span>
+        <span className="text-muted-foreground">For best results, you should paste the below link into a new private tab. This prevents issues with previously persisted state.</span>
         <Button variant="outline" onClick={() => {
           copyToClipboard(`https://blorpblorp.xyz?${demoParams}`);
           jsConfetti.addConfetti()
