@@ -19,7 +19,8 @@ import { cn, copyToClipboard } from "./lib/utils";
 import { FaGithub, FaRegClipboard } from "react-icons/fa6";
 import Lowlight from 'react-lowlight'
 import 'react-lowlight/all'
-import 'highlight.js/styles/github-dark.min.css'
+// import 'highlight.js/styles/stackoverflow-dark.css'
+import 'highlight.js/styles/github-dark-dimmed.css'
 import { Button } from "./components/ui/button";
 import JSConfetti from 'js-confetti'
 
@@ -334,7 +335,7 @@ function App() {
   return (
     <div className="max-w-3xl mx-auto py-16 flex flex-col gap-6 px-4">
       <h1 className="text-5xl font-jersey">
-        DEPLOY BLORP
+        DEPLOY <a href="https://blorpblorp.xyz/" className="underline" target="_blank" rel="noopener">BLORP</a>
       </h1>
 
       <h2 className="text-muted-foreground">
@@ -418,7 +419,9 @@ function App() {
         <span className="text-muted-foreground">For best results, you should paste the below link into a new private tab. This prevents issues with previously persisted state.</span>
         <Button variant="outline" onClick={() => {
           copyToClipboard(`https://blorpblorp.xyz?${demoParams}`);
-          jsConfetti.addConfetti()
+          jsConfetti.addConfetti({
+            emojis: ['🪐', '👽', '⭐'],
+          })
         }}>
           Copy demo link
         </Button>
@@ -437,9 +440,11 @@ function App() {
         </Tabs>
 
         <div className="relative dark">
-          <Button variant="secondary" size="sm" className="absolute top-2 right-2" onClick={() => {
+          <Button variant="ghost" size="sm" className="absolute top-2 right-2" onClick={() => {
             copyToClipboard(code)
-            jsConfetti.addConfetti()
+            jsConfetti.addConfetti({
+              emojis: ['🪐', '👽', '⭐'],
+            })
           }}><FaRegClipboard aria-label="Copy to clipboard" /> Copy</Button>
           <Lowlight markers={[]} language={syntax} value={code} className="font-mono rounded-sm overflow-hidden text-xs" />
         </div>
