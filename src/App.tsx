@@ -439,7 +439,7 @@ function App() {
 
       <div className="flex justify-center text-muted-foreground gap-2">
         <a
-          href="https://github.com/Blorp-Labs"
+          href="https://github.com/Blorp-Labs/deployment-config-tool"
           target="_blank"
           className="flex items-center gap-1.5 hover:underline"><FaGithub />View on GitHub</a>
         <span>|</span>
