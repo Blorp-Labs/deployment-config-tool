@@ -10,17 +10,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn, copyToClipboard } from "./lib/utils";
 import { FaGithub, FaRegClipboard } from "react-icons/fa6";
-import Lowlight from "react-lowlight";
-import "react-lowlight/all";
-// import 'highlight.js/styles/stackoverflow-dark.css'
-import "highlight.js/styles/github-dark-dimmed.css";
 import { Button } from "./components/ui/button";
 import JSConfetti from "js-confetti";
 
+// Needed for types to work
+import 'lowlight'
+import yaml from "highlight.js/lib/languages/yaml"
+import dockerfile from "highlight.js/lib/languages/dockerfile"
+import bash from "highlight.js/lib/languages/bash"
+import Lowlight from "react-lowlight";
+// import 'highlight.js/styles/stackoverflow-dark.css'
+import "highlight.js/styles/github-dark-dimmed.min.css";
+
+Lowlight.registerLanguage('yaml', yaml)
+Lowlight.registerLanguage('dockerfile', dockerfile)
+Lowlight.registerLanguage('bash', bash)
+
 const jsConfetti = new JSConfetti();
+
+const confetti = () => {
+  jsConfetti.addConfetti({
+    emojis: ["🪐", "👽", "⭐"],
+    emojiSize: 60,
+  });
+}
 
 enum InstanceSelectionMode {
   DEFAULT_FIRST = "default_first",
@@ -329,8 +344,6 @@ function App() {
     return params.toString();
   })();
 
-  console.log(demoParams);
-
   return (
     <div className="max-w-3xl mx-auto py-16 flex flex-col gap-6 px-4">
       <h1 className="text-5xl font-jersey">
@@ -353,10 +366,10 @@ function App() {
         className={cn(
           "flex flex-col gap-3 border p-4 rounded-sm shadow-sm",
           name.trim().length === 0 &&
-            "border-destructive border-dashed bg-destructive/5",
+          "border-destructive border-dashed bg-destructive/5",
         )}
       >
-        <label htmlFor="name" className="font-mono font-bold">
+        <label htmlFor="name" className="font-mono font-bold max-sm:text-sm">
           REACT_APP_NAME
         </label>
         <p className="text-muted-foreground text-sm">
@@ -383,10 +396,10 @@ function App() {
         className={cn(
           "flex flex-col gap-3 border p-4 rounded-sm shadow-sm",
           !defaultInstanceValid &&
-            "border-destructive border-dashed bg-destructive/5",
+          "border-destructive border-dashed bg-destructive/5",
         )}
       >
-        <label htmlFor="default-instance" className="font-mono font-bold">
+        <label htmlFor="default-instance" className="font-mono font-bold max-sm:text-sm">
           REACT_APP_DEFAULT_INSTANCE
         </label>
         <p className="text-muted-foreground text-sm">
@@ -399,7 +412,7 @@ function App() {
             <li>
               <code>https://lemmy.world</code>
             </li>
-            <li>
+            <li className="text-ellipsis overflow-hidden">
               <code>https://lemmy.world,https://piefed.zip,etc</code>
             </li>
           </ul>
@@ -420,13 +433,13 @@ function App() {
             checked={lockToDefaultInstance}
             onCheckedChange={setLockToDefaultInstance}
           />
-          <label htmlFor="lock" className="font-mono font-bold">
+          <label htmlFor="lock" className="font-mono font-bold max-sm:text-sm">
             REACT_APP_LOCK_TO_DEFAULT_INSTANCE
           </label>
         </div>
-        <p className="text-muted-foreground text-sm">
-          Only allow uses to login/signup to the instance(s) specified in{" "}
-          <span className="font-mono">REACT_APP_DEFAULT_INSTANCE</span>
+        <p className="text-muted-foreground text-sm prose">
+          Only allow login/signup to the instance(s) specified in{" "}
+          <code>REACT_APP_DEFAULT_INSTANCE</code>
         </p>
       </div>
 
@@ -436,12 +449,18 @@ function App() {
           !hasMultipleInstances && "opacity-50",
         )}
       >
-        <label htmlFor="default-instance" className="font-mono font-bold">
+        <label htmlFor="default-instance" className="font-mono font-bold max-sm:text-sm">
           REACT_APP_INSTANCE_SELECTION_MODE
         </label>
         <p className="text-muted-foreground text-sm">
           Only nessesary if you specifiy multiple default instances.
         </p>
+        <div className="dark:prose-invert prose prose-sm">
+          <ul>
+            <li><code>{InstanceSelectionMode.DEFAULT_FIRST}</code>: always the first instance from <code>REACT_APP_DEFAULT_INSTANCE</code></li>
+            <li><code>{InstanceSelectionMode.DEFAULT_RANDOM}</code>: randomly select from <code>REACT_APP_DEFAULT_INSTANCE</code></li>
+          </ul>
+        </div>
         <Select
           value={instanceSelectionMode}
           onValueChange={setInstanceSelectionMode}
@@ -470,9 +489,7 @@ function App() {
           variant="outline"
           onClick={() => {
             copyToClipboard(`https://blorpblorp.xyz?${demoParams}`);
-            jsConfetti.addConfetti({
-              emojis: ["🪐", "👽", "⭐"],
-            });
+            confetti();
           }}
         >
           Copy demo link
@@ -482,36 +499,37 @@ function App() {
       <div className="flex flex-col gap-3 border p-4 rounded-sm shadow-sm">
         <h2 className="font-jersey text-3xl">Deploy it!</h2>
 
-        <Tabs
+        <Select
           value={configType}
-          onValueChange={(v) => setConfigType(v as ConfigType)}
+          onValueChange={setConfigType}
         >
-          <TabsList>
-            <TabsTrigger value={ConfigType.DOCKER_COMMAND}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={ConfigType.DOCKER_COMMAND}>
               {ConfigType.DOCKER_COMMAND}
-            </TabsTrigger>
-            <TabsTrigger value={ConfigType.DOCKERFILE}>
+            </SelectItem>
+            <SelectItem value={ConfigType.DOCKERFILE}>
               {ConfigType.DOCKERFILE}
-            </TabsTrigger>
-            <TabsTrigger value={ConfigType.DOCKER_COMPOSE}>
+            </SelectItem>
+            <SelectItem value={ConfigType.DOCKER_COMPOSE}>
               {ConfigType.DOCKER_COMPOSE}
-            </TabsTrigger>
-            <TabsTrigger value={ConfigType.KUBERNETES}>
+            </SelectItem>
+            <SelectItem value={ConfigType.KUBERNETES}>
               {ConfigType.KUBERNETES}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </SelectItem>
+          </SelectContent>
+        </Select>
 
         <div className="relative dark">
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             className="absolute top-2 right-2"
             onClick={() => {
               copyToClipboard(code);
-              jsConfetti.addConfetti({
-                emojis: ["🪐", "👽", "⭐"],
-              });
+              confetti();
             }}
           >
             <FaRegClipboard aria-label="Copy to clipboard" /> Copy
